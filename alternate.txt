@@ -1,0 +1,550 @@
+/* 
+import java.util.Scanner;
+import java.sql.*;
+
+public class StudentInternshipSystem {
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/your_database_name?useSSL=false"; // Change "your_database_name" to your actual database name
+    static final String USER = "root";
+    static final String PASS = "your_password"; // Change "your_password" to your actual database password
+
+    public static void main(String[] args) {
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("Welcome to Student Internship Management System");
+
+            mainMenu(stmt, sc);
+
+            sc.close();
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
+    static void mainMenu(Statement stmt, Scanner sc) {
+        System.out.println("How do you want to sign in?");
+        System.out.println("1. Student");
+        System.out.println("2. Admin");
+        System.out.println("3. Exit");
+        System.out.print("Please enter your choice: ");
+        int choice = Integer.parseInt(sc.nextLine());
+
+        switch (choice) {
+            case 1:
+                studentMenu(stmt, sc);
+                break;
+            case 2:
+                adminMenu(stmt, sc);
+                break;
+            case 3:
+                System.out.println("Exiting system. Goodbye!");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                mainMenu(stmt, sc);
+                break;
+        }
+    }
+
+static void studentMenu(Statement stmt, Scanner sc) {
+    System.out.println("Student Menu");
+    System.out.println("1. View Available Internships");
+    System.out.println("2. Apply for an Internship");
+    System.out.println("3. View My Internships");
+    System.out.println("4. Exit");
+
+    System.out.print("Please enter your choice: ");
+    int choice = Integer.parseInt(sc.nextLine());
+
+    switch (choice) {
+        case 1:
+            viewAvailableInternships(stmt);
+            break;
+        case 2:
+            applyForInternship(stmt, sc);
+            break;
+        case 3:
+            viewMyInternships(stmt, sc);
+            break;
+        case 4:
+            System.out.println("Exiting student menu.");
+            return;
+        default:
+            System.out.println("Invalid choice. Please try again.");
+            studentMenu(stmt, sc);
+            break;
+    }
+}
+
+static void adminMenu(Statement stmt, Scanner sc) {
+    System.out.println("Admin Menu");
+    System.out.println("1. View All Internships");
+    System.out.println("2. Add New Internship");
+    System.out.println("3. Delete Internship");
+    System.out.println("4. Exit");
+
+    System.out.print("Please enter your choice: ");
+    int choice = Integer.parseInt(sc.nextLine());
+
+    switch (choice) {
+        case 1:
+            viewAllInternships(stmt);
+            break;
+        case 2:
+            addNewInternship(stmt, sc);
+            break;
+        case 3:
+            deleteInternship(stmt, sc);
+            break;
+        case 4:
+            System.out.println("Exiting admin menu.");
+            return;
+        default:
+            System.out.println("Invalid choice. Please try again.");
+            adminMenu(stmt, sc);
+            break;
+    }
+}
+}
+*/
+
+
+
+
+
+
+
+
+
+
+/*
+import java.util.Scanner;
+import java.sql.*;
+
+public class StudentInternshipSystem {
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/studentinternshipdb?useSSL=false"; // Change "your_database_name" to your actual database name
+    static final String USER = "root";
+    static final String PASS = "Ayush-2004"; // Change "your_password" to your actual database password
+
+    public static void main(String[] args) {
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("Welcome to Student Internship Management System");
+
+            mainMenu(conn,stmt, sc);
+
+            sc.close();
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
+    static void mainMenu(Connection conn,Statement stmt, Scanner sc) {
+        System.out.println("How do you want to sign in?");
+        System.out.println("1. Student");
+        System.out.println("2. Admin");
+        System.out.println("3. Exit");
+        System.out.print("Please enter your choice: ");
+        int choice = Integer.parseInt(sc.nextLine());
+
+        switch (choice) {
+            case 1:
+                studentMenu(conn, stmt, sc);
+                break;
+            case 2:
+                adminMenu(conn, stmt, sc);
+                break;
+            case 3:
+                System.out.println("Exiting system. Goodbye!");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                mainMenu(conn,stmt, sc);
+                break;
+        }
+    }
+
+    static void studentMenu(Connection conn, Statement stmt, Scanner sc) {
+        System.out.println("Student Menu");
+        System.out.println("1. View Available Internships");
+        System.out.println("2. Apply for an Internship");
+        System.out.println("3. View My Internships");
+        System.out.println("4. Exit");
+
+        System.out.print("Please enter your choice: ");
+        int choice = Integer.parseInt(sc.nextLine());
+
+        switch (choice) {
+            case 1:
+                viewAvailableInternships(stmt);
+                break;
+            case 2:
+                applyForInternship(conn,stmt, sc);
+                break;
+            case 3:
+                viewMyInternships(conn,stmt, sc);
+                break;
+            case 4:
+                System.out.println("Exiting student menu.");
+                return;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                studentMenu(conn,stmt, sc);
+                break;
+        }
+    }
+
+    static void adminMenu(Connection conn,Statement stmt, Scanner sc) {
+        System.out.println("Admin Menu");
+        System.out.println("1. View All Internships");
+        System.out.println("2. Add New Internship");
+        System.out.println("3. Delete Internship");
+        System.out.println("4. Exit");
+
+        System.out.print("Please enter your choice: ");
+        int choice = Integer.parseInt(sc.nextLine());
+
+        switch (choice) {
+            case 1:
+                viewAllInternships(stmt);
+                break;
+            case 2:
+                addNewInternship(conn,stmt, sc);
+                break;
+            case 3:
+                deleteInternship(conn,stmt, sc);
+                break;
+            case 4:
+                System.out.println("Exiting admin menu.");
+                return;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                adminMenu(conn,stmt, sc);
+                break;
+        }
+    }
+
+    static void viewAvailableInternships(Statement stmt) {
+    try {
+        String sql = "SELECT i.*, c.company_name " +
+                     "FROM Internship i " +
+                     "INNER JOIN Company c ON i.company_id = c.company_id";
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            int internshipId = rs.getInt("internship_id");
+            int companyId = rs.getInt("company_id");
+            String companyName = rs.getString("company_name");
+            String startDate = rs.getString("start_date");
+            String endDate = rs.getString("end_date");
+            String supervisorName = rs.getString("supervisor_name");
+            String department = rs.getString("department");
+            
+            System.out.println("Internship ID: " + internshipId);
+            System.out.println("Company ID: " + companyId);
+            System.out.println("Company Name: " + companyName);
+            System.out.println("Start Date: " + startDate);
+            System.out.println("End Date: " + endDate);
+            System.out.println("Supervisor Name: " + supervisorName);
+            System.out.println("Department: " + department);
+            System.out.println();
+        }
+        rs.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
+    static void applyForInternship(Connection conn, Statement stmt, Scanner sc) {
+    try {
+        System.out.println("Enter Internship ID to apply: ");
+        int internshipId = Integer.parseInt(sc.nextLine());
+        System.out.println("Enter Student ID: ");
+        int studentId = Integer.parseInt(sc.nextLine());
+        String sql = "INSERT INTO Student_Internship (student_id, internship_id) VALUES (?, ?)";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, studentId);
+        preparedStatement.setInt(2, internshipId);
+        int rowsAffected = preparedStatement.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("Successfully applied for internship.");
+        } else {
+            System.out.println("Failed to apply for internship.");
+        }
+        preparedStatement.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
+    static void viewMyInternships(Connection conn, Statement stmt, Scanner sc) {
+    try {
+        System.out.println("Enter Student ID: ");
+        int studentId = Integer.parseInt(sc.nextLine());
+        String sql = "SELECT i.* FROM Internship i INNER JOIN Student_Internship si ON i.internship_id = si.internship_id WHERE si.student_id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, studentId);
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            int internshipId = rs.getInt("internship_id");
+            int companyId = rs.getInt("company_id");
+            String startDate = rs.getString("start_date");
+            String endDate = rs.getString("end_date");
+            String supervisorName = rs.getString("supervisor_name");
+            String department = rs.getString("department");
+            
+            System.out.println("Internship ID: " + internshipId);
+            System.out.println("Company ID: " + companyId);
+            System.out.println("Start Date: " + startDate);
+            System.out.println("End Date: " + endDate);
+            System.out.println("Supervisor Name: " + supervisorName);
+            System.out.println("Department: " + department);
+            System.out.println();
+        }
+        rs.close();
+        preparedStatement.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
+    static void viewAllInternships(Statement stmt) {
+        try {
+            String sql = "SELECT * FROM Internship";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int internshipId = rs.getInt("internship_id");
+                int companyId = rs.getInt("company_id");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+                String supervisorName = rs.getString("supervisor_name");
+                String department = rs.getString("department");
+                
+                System.out.println("Internship ID: " + internshipId);
+                System.out.println("Company ID: " + companyId);
+                System.out.println("Start Date: " + startDate);
+                System.out.println("End Date: " + endDate);
+                System.out.println("Supervisor Name: " + supervisorName);
+                System.out.println("Department: " + department);
+                System.out.println();
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void addNewInternship(Connection conn,Statement stmt, Scanner sc) {
+    try {
+        System.out.println("Enter Company ID: ");
+        int companyId = Integer.parseInt(sc.nextLine());
+        System.out.println("Enter Start Date (YYYY-MM-DD): ");
+        String startDate = sc.nextLine();
+        System.out.println("Enter End Date (YYYY-MM-DD): ");
+        String endDate = sc.nextLine();
+        System.out.println("Enter Supervisor Name: ");
+        String supervisorName = sc.nextLine();
+        System.out.println("Enter Department: ");
+        String department = sc.nextLine();
+        
+        String sql = "INSERT INTO Internship (company_id, start_date, end_date, supervisor_name, department) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, companyId);
+        preparedStatement.setString(2, startDate);
+        preparedStatement.setString(3, endDate);
+        preparedStatement.setString(4, supervisorName);
+        preparedStatement.setString(5, department);
+        int rowsAffected = preparedStatement.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("New internship added successfully.");
+        } else {
+            System.out.println("Failed to add new internship.");
+        }
+        preparedStatement.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+    static void deleteInternship(Connection conn,Statement stmt, Scanner sc) {
+    try {
+        System.out.println("Enter Internship ID to delete: ");
+        int internshipId = Integer.parseInt(sc.nextLine());
+        String sql = "DELETE FROM Internship WHERE internship_id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, internshipId);
+        int rowsAffected = preparedStatement.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("Internship deleted successfully.");
+        } else {
+            System.out.println("Failed to delete internship.");
+        }
+        preparedStatement.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        }
+    }
+}
+*/
+
+
+
+
+
+
+
+
+
+CREATE TABLE Student (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    major VARCHAR(100),
+    count INT
+);
+
+CREATE TABLE Company (
+    company_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    industry VARCHAR(100),
+    location VARCHAR(100)
+);
+
+CREATE TABLE Internship (
+    internship_id INT PRIMARY KEY AUTO_INCREMENT,
+    company_id INT,
+    start_date DATE,
+    end_date DATE,
+    supervisor_name VARCHAR(100),
+    department VARCHAR(100)
+);
+
+CREATE TABLE Feedback (
+    feedback_id INT PRIMARY KEY AUTO_INCREMENT,
+    internship_id INT,
+    feedback_text TEXT,
+    rating INT,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+
+CREATE TABLE Student (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    major VARCHAR(100),
+    count INT
+);
+
+CREATE TABLE Company (
+    company_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    industry VARCHAR(100),
+    location VARCHAR(100)
+);
+
+CREATE TABLE Internship (
+    internship_id INT PRIMARY KEY AUTO_INCREMENT,
+    company_id INT,
+    start_date DATE,
+    end_date DATE,
+    supervisor_name VARCHAR(100),
+    department VARCHAR(100)
+);
+
+CREATE TABLE Feedback (
+    feedback_id INT PRIMARY KEY AUTO_INCREMENT,
+    internship_id INT,
+    feedback_text TEXT,
+    rating INT,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE Internship
+ADD CONSTRAINT fk_student_id
+FOREIGN KEY (student_id)
+REFERENCES Student(student_id);
+
+ALTER TABLE Internship
+ADD CONSTRAINT fk_company_id
+FOREIGN KEY (company_id)
+REFERENCES Company(company_id);
+
+ALTER TABLE Feedback
+ADD CONSTRAINT fk_internship_id
+FOREIGN KEY (internship_id)
+REFERENCES Internship(internship_id)
+ON DELETE CASCADE;
+
+
+
+INSERT INTO Student (name, email, major, count) 
+VALUES 
+    ('John Doe', 'john.doe@example.com', 'Computer Science', 0),
+    ('Alice Smith', 'alice.smith@example.com', 'Mechanical Engineering', 0),
+    ('Bob Johnson', 'bob.johnson@example.com', 'Electrical Engineering', 0);
+
+INSERT INTO Company (name, industry, location) VALUES
+('Tech Innovations Inc.', 'Technology', 'San Francisco, CA'),
+('Global Motors', 'Automotive', 'Detroit, MI'),
+('Power Solutions Ltd.', 'Energy', 'Houston, TX');
+
+INSERT INTO Internship (student_id, company_id, start_date, end_date, supervisor_name, department) VALUES
+(1, 1, '2024-01-15', '2024-06-15', 'Sarah Johnson', 'Software Development'),
+(2, 2, '2024-02-01', '2024-07-01', 'Michael Brown', 'Mechanical Engineering'),
+(3, 3, '2024-03-15', '2024-08-15', 'Emily Clark', 'Electrical Engineering');
+
+INSERT INTO Feedback (internship_id, feedback_text, rating) VALUES
+(1, 'Great experience, learned a lot!', 5),
+(2, 'Good company culture, enjoyed my time.', 4),
+(3, 'Could have had more challenging projects.', 3);
